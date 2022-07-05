@@ -7,6 +7,9 @@ app.use(express.json());
 
 const db = require('./models');
 
+const clipRouter = require('./routes/Clips');
+app.use('/clips', clipRouter);
+
 db.sequelize.sync().then(
     app.listen(port, () => {
         console.log('LISTEN');
