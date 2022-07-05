@@ -4,7 +4,15 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        game: {
+            type: DataTypes.STRING,
+            allowNull: false 
+        },
         videoURL: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        videoName: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -14,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         rank: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false 
         }
     })
     return Clips;
