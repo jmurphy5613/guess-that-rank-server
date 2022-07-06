@@ -10,6 +10,9 @@ const db = require('./models');
 const clipRouter = require('./routes/Clips');
 app.use('/clips', clipRouter);
 
+const guessRouter = require('./routes/Guess');
+app.use('/guess', guessRouter);
+
 db.sequelize.sync().then(
     app.listen(port, () => {
         console.log('LISTEN');

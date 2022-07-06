@@ -3,7 +3,7 @@ const router = express.Router();
 const { Guess } = require('../models');
 const { Clips } = require('../models');
 
-router.put('/add', async (req, res) => {
+router.post('/add', async (req, res) => {
     const currentGuess = req.body;
     const currentClip = await Clips.findOne({where: {id: currentGuess.clipId}});
     if(currentGuess.rank == currentClip.rank) {
