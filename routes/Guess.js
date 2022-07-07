@@ -12,6 +12,11 @@ router.post('/add', async (req, res) => {
         res.send({ response: 'incorrect', correctRank: currentClip.rank });
     }
     await Guess.create(currentGuess);
-})
+});
+
+router.get('/guessed/:username', async (req, res) => {
+    const clips = await Clips.findAll({ where: {user: req.params.username} });
+    res.send(clips);
+});
 
 module.exports = router;
