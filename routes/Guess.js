@@ -9,7 +9,7 @@ router.post('/add', async (req, res) => {
     if(currentGuess.rank == currentClip.rank) {
         res.send({ response: 'correct' });
     } else {
-        res.send({ response: 'incorrect' });
+        res.send({ response: 'incorrect', correctRank: currentClip.rank });
     }
     await Guess.create(currentGuess);
 })
