@@ -4,8 +4,8 @@ const { Clips } = require('../models');
 
 router.post('/add-clip', async(req, res) => {
     const clip = req.body;
-    await Clips.create(clip);
-    res.send({ response: 'success' });
+    const clipInDb = await Clips.create(clip);
+    res.send({ response: 'success', id: clipInDb.id });
 });
 
 router.get('/get-all', async(req, res) => {
@@ -16,6 +16,6 @@ router.get('/get-all', async(req, res) => {
 router.get('/by-id/:id', async(req, res) => {
     const clip = await Clips.findOne({ where: { id: req.params.id } });
     res.send(clip);
-})
+});
 
 module.exports = router;
