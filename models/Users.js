@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Users = sequelize.define("Users", {
-        gmail: {
+        nickname: {
             type: DataTypes.STRING,
             allowNull: false
         },

@@ -19,7 +19,7 @@ router.get('/guessed/:username', async (req, res) => {
     res.send(clips);
 });
 
-router.get('/not-guessed/:username', async (req, res) => {
+router.get('/not-guessed-clips/:username', async (req, res) => {
     const guesses = await Guess.findAll({ where: { user: req.params.username } });
     let gussesClipIds = [];
     for(let i = 0; i < guesses.length; i++) {
@@ -51,6 +51,42 @@ router.get('/not-guessed/:username', async (req, res) => {
         notGuessedClips.push(await Clips.findOne({where: {id: notGuessedClipIds[i]}}));
     }
     res.send(notGuessedClips);
+})
+
+router.get('/guessed-clips/:username', async (req, res) => {
+    //get the clips that the user has guessed
+    const guesses = await Guess.findAll({ where: { user: req.params.username } });
+    let gussesClipIds = [];
+    for(let i = 0; i < guesses.length; i++) {
+        gussesClipIds.push(guesses[i]);
+        console.log('guessed clips: ', gussesClipIds.length)
+    }
+    //get the object of the clips that have been guessed
+    let guessedClips = [];
+    for(let i = 0; i < gussesClipIds.length; i++) {
+        guessedClips.push(await Clips.findOne({where: {id: gussesClipIds[i].clipId}}));
+    }
+    res.send(guessedClips);
+});
+
+router.get('/has-already-gussed/:clipId/:user', async (req, res) => {
+    const guess = await Guess.findOne({where: {clipId: req.params.clipId, user: req.params.user}});
+    if(guess) {
+        res.send({response: 'true'});
+    } else {
+        res.send({response: 'false'});
+    }
+});
+
+router.get('/percent-correct/:clipId', async (req, res) => {
+    const clips = await Clips.findAll({ where: { clipId: req.params.clipId } });
+    let correctGuesses = 0;
+    let totalGuesses = 0;
+    for(let i = 0; i < clips.length; i++) {
+        if(clips[i].isCorrect) correctGuesses++;
+        totalGuesses++;
+    }
+    res.send({percent: (correctGuesses / totalGuesses) * 100});
 })
 
 module.exports = router;

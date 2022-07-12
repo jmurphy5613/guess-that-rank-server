@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         user: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        isCorrect: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
         }
     });
     return Guess;
