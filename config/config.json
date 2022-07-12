@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "Fords57254_",
+    "database": "guessthatrank",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "bc6336569d78a5",
+    "password": "4028030a",
+    "database": "heroku_3e9807f77180b44",
+    "host": "us-cdbr-east-06.cleardb.net",
+    "dialect": "mysql"
+  }
+}
