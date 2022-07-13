@@ -87,6 +87,19 @@ router.get('/percent-correct/:clipId', async (req, res) => {
         totalGuesses++;
     }
     res.send({percent: (correctGuesses / totalGuesses) * 100});
+});
+
+router.get('/record/:username', async (req, res) => {
+    const guesses = await Guess.findAll({ where: { user: req.params.username } });
+    let correctGuesses = 0;
+    let totalGuesses = 0;
+    for(let i = 0; i < guesses.length; i++) {
+        if(guesses[i].rank == guesses[i].clip.rank) {
+            correctGuesses++;
+        }
+        totalGuesses++;
+    }
+    res.send({correct: correctGuesses, total: totalGuesses});
 })
 
 module.exports = router;
