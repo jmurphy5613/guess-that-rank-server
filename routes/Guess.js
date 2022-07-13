@@ -94,7 +94,7 @@ router.get('/record/:username', async (req, res) => {
     let correctGuesses = 0;
     let totalGuesses = 0;
     for(let i = 0; i < guesses.length; i++) {
-        if(guesses[i].rank == guesses[i].clip.rank) {
+        if(guesses[i].isCorrect) {
             correctGuesses++;
         }
         totalGuesses++;
