@@ -66,7 +66,22 @@ router.get('/guessed-clips/:username', async (req, res) => {
     for(let i = 0; i < gussesClipIds.length; i++) {
         guessedClips.push(await Clips.findOne({where: {id: gussesClipIds[i].clipId}}));
     }
-    res.send(guessedClips);
+
+    //remove all duplicates
+    let uniqueGuessedClips = [];
+    for(let i = 0; i < guessedClips.length; i++) {
+        let found = false;
+        for(let j = 0; j < uniqueGuessedClips.length; j++) {
+            if(guessedClips[i].id == uniqueGuessedClips[j].id) {
+                found = true;
+            }
+        }
+        if(!found) {
+            uniqueGuessedClips.push(guessedClips[i]);
+        }
+    }
+    res.send(uniqueGuessedClips);
+
 });
 
 router.get('/has-already-gussed/:clipId/:user', async (req, res) => {
