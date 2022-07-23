@@ -8,8 +8,8 @@ router.post('/add-clip', async(req, res) => {
     res.send({ response: 'success', id: clipInDb.id });
 });
 
-router.get('/get-all', async(req, res) => {
-    const clips = await Clips.findAll();
+router.get('/get-all/:game', async(req, res) => {
+    const clips = await Clips.findAll({ where: { game: req.params.game } });
     res.send(clips);
 });
 

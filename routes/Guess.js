@@ -19,7 +19,7 @@ router.get('/guessed/:username', async (req, res) => {
     res.send(clips);
 });
 
-router.get('/not-guessed-clips/:username', async (req, res) => {
+router.get('/not-guessed-clips/:game/:username', async (req, res) => {
     const guesses = await Guess.findAll({ where: { user: req.params.username } });
     let gussesClipIds = [];
     for(let i = 0; i < guesses.length; i++) {
@@ -27,7 +27,7 @@ router.get('/not-guessed-clips/:username', async (req, res) => {
         console.log('guessed clips: ', gussesClipIds.length)
     }
     let allClipIds = [];
-    const clips = await Clips.findAll();
+    const clips = await Clips.findAll({ where: { game: req.params.game } });
     for(let i = 0; i < clips.length; i++) {
         allClipIds.push(clips[i].id);
     }
@@ -48,12 +48,12 @@ router.get('/not-guessed-clips/:username', async (req, res) => {
     //get the objects for the not guessed clips
     let notGuessedClips = [];
     for(let i = 0; i < notGuessedClipIds.length; i++) {
-        notGuessedClips.push(await Clips.findOne({where: {id: notGuessedClipIds[i]}}));
+        notGuessedClips.push(await Clips.findOne({where: {id: notGuessedClipIds[i], game: req.params.game}}));
     }
     res.send(notGuessedClips);
 })
 
-router.get('/guessed-clips/:username', async (req, res) => {
+router.get('/guessed-clips/:game/:username', async (req, res) => {
     //get the clips that the user has guessed
     const guesses = await Guess.findAll({ where: { user: req.params.username } });
     let gussesClipIds = [];
@@ -64,7 +64,7 @@ router.get('/guessed-clips/:username', async (req, res) => {
     //get the object of the clips that have been guessed
     let guessedClips = [];
     for(let i = 0; i < gussesClipIds.length; i++) {
-        guessedClips.push(await Clips.findOne({where: {id: gussesClipIds[i].clipId}}));
+        guessedClips.push(await Clips.findOne({where: {id: gussesClipIds[i].clipId, game: req.params.game}}));
     }
 
     //remove all duplicates
@@ -115,6 +115,11 @@ router.get('/record/:username', async (req, res) => {
         totalGuesses++;
     }
     res.send({correct: correctGuesses, total: totalGuesses});
+});
+
+router.get('/all-guesses/:username', async (req, res) => {
+    const guesses = await Guess.findAll({ where: { user: req.params.username } });
+    res.send(guesses);
 })
 
 module.exports = router;
