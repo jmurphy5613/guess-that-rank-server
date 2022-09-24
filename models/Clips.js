@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false 
         },
         videoURL: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING, 
             allowNull: false
         },
         videoName: {
