@@ -24,8 +24,12 @@ router.get('/guessed/:username/:game', async (req, res) => {
     const totalGuesses = [];
     for(const guess of guesses) {
         const clip = await Clips.findOne({ where: { id: guess.clipId } });
-        if(clip.game == req.params.game) {
-            totalGuesses.push(guess);
+        const currentGuess = {
+            rank: guess.rank,
+            correctRank: clip.rank
+        }
+        if(clip.game === req.params.game) {
+            totalGuesses.push(currentGuess);
         }
     }
     res.send(totalGuesses)
