@@ -15,6 +15,6 @@ app.use('/guess', guessRouter);
 
 db.sequelize.sync().then(
     app.listen(process.env.PORT, () => {
-        console.log('LISTEN');
+        console.log('LISTENN');
     })
 );

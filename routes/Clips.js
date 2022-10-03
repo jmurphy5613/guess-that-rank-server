@@ -11,7 +11,7 @@ router.post('/add-clip', async(req, res) => {
 router.get('/get-all/:game', async(req, res) => {
     const clips = await Clips.findAll({ where: { game: req.params.game } });
     res.send(clips);
-});
+}); 
 
 router.get('/by-id/:id', async(req, res) => {
     const clip = await Clips.findOne({ where: { id: req.params.id } });
