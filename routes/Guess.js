@@ -19,6 +19,18 @@ router.get('/guessed/:username', async (req, res) => {
     res.send(clips);
 });
 
+router.get('/guessed/:username/:game', async (req, res) => {
+    const guesses = await Guess.findAll({ where: {user: req.params.username } });
+    const totalGuesses = [];
+    for(const guess of guesses) {
+        const clip = await Clips.findOne({ where: { id: guess.clipId } });
+        if(clip.game == req.params.game) {
+            totalGuesses.push(guess);
+        }
+    }
+    res.send(totalGuesses)
+});
+
 router.get('/not-guessed-clips/:game/:username', async (req, res) => {
     const guesses = await Guess.findAll({ where: { user: req.params.username } });
     let gussesClipIds = [];
