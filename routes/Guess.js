@@ -24,14 +24,12 @@ router.get('/not-guessed-clips/:game/:username', async (req, res) => {
     let gussesClipIds = [];
     for(let i = 0; i < guesses.length; i++) {
         gussesClipIds.push(guesses[i]);
-        console.log('guessed clips: ', gussesClipIds.length)
     }
     let allClipIds = [];
     const clips = await Clips.findAll({ where: { game: req.params.game } });
     for(let i = 0; i < clips.length; i++) {
         allClipIds.push(clips[i].id);
     }
-    console.log('number of clips: ', allClipIds.length);
 
     let notGuessedClipIds = [];
     for(let i = 0; i < allClipIds.length; i++) {
