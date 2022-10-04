@@ -14,7 +14,7 @@ const guessRouter = require('./routes/Guess');
 app.use('/guess', guessRouter);
 
 db.sequelize.sync().then(
-    app.listen(process.env.PORT, () => {
+    app.listen(process.env.PORT || port, () => {
         console.log('LISTENN!!!!!');
     })
 );
